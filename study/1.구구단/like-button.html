@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>좋아요 버튼</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+<div id="root">
+<!--    <div v-if="route==='main'">메인회면</div>-->
+<!--    <div v-else-if="route==='sub'">메인회면</div>-->
+    <div v-if="liked">좋아함누름</div>
+<button v-else v-on:click="onClickButton">like</button>
+</div>
+
+</body>
+<script>
+  const app = new Vue({
+    el:'#root',
+      data:{
+        liked:false,
+          route:'main'
+      },
+      methods:{
+        onClickButton(){
+            this.liked=true;
+        }
+      }
+  })
+</script>
+</html>
+
+<!--spa-->
+<!--주소창이 안바뀌고 계속 같은 주소 / 하나의 페이지에서 바꾸고 바뀌고 / 어떤부분이 바뀌고 관리하는 것이 관건-->
+
+<!--화면이랑 데이터를 일치 시키는 것이 중요하다-->

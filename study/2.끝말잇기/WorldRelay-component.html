@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>끝말잇기</title>
+<!--    cdn으로 불러왔음-->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+<!--컴포넌트-위 / 인스턴스 - 아래-->
+<!--div#root - 위 / 스크립트 - 아래-->
+<div id="root">
+<!--컴포넌트 각각독립적-->
+    <word-replay start-word="하마"></word-replay>
+    <word-replay start-word="마하"></word-replay>
+    <word-replay start-word="나라"></word-replay>
+
+
+</div>
+
+</body>
+<!--webpack -> script여러개 나오고 순서 바꾸면 안되고 그런거 편리하게 해줌, 스크립트 관리 어려움 해결-->
+<script>
+<!--   뷰 컴포넌트 -->
+ Vue.component('word-replay',{ //전역 컴포넌트
+     // 백틱, 강제로 부모가 있어야함 div,template같이
+     template:  `
+       <div>
+       <div>{{word}}</div>
+       <form v-on:submit="onSubmitForm">
+         <input type="text" v-model="value" ref="answer">
+         <button type="submit">입력!</button>
+       </form>
+       <div>{{result}}</div>
+       </div>
+
+     `
+     ,
+     props:['startWord'],
+     // 데이터가 뭔가다름 -> 함수로 만들어 줘야하 -> 여러번 사용하는 것을 전제로함(컴포너트)
+     // 데이터가 컴포넌트마다 달라야함
+     // 새로운 객체만들어서 리턴
+     data() {
+         return{
+             word:this.startWord,
+             result:'',
+             value:''
+         }
+     },
+     methods:{
+         onSubmitForm(e) {
+             e.preventDefault();
+             if(this.word[this.word.length-1] === this.value[0]){
+                 this.result='정답'
+                 this.word = this.value;
+                 this.value='';
+                 this.$refs.answer.focus();
+             }else{
+                 this.result='땡'
+                 this.$refs.answer.focus();
+                 this.value=''
+             }
+
+         }
+
+     }
+ })
+</script>
+<script>
+<!--    new Vue 뷰인스턴트-->
+  const app = new Vue({
+    el:'#root'
+  })
+</script>
+</html>
